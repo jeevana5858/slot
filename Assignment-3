@@ -1,1 +1,26 @@
-
+def clean_number(num):
+    digits = ""
+    for ch in num:
+        if ch.isdigit():
+            digits += ch
+    return digits[-10:]
+contacts = [
+    ("Dr. Ravi", "+91 98400 12345", "ravi@mail.com"),
+    ("ravi kumar", "9840012345", "ravi.k@mail.com"),
+    ("Anita", "98765 43210", "anita@mail.com"),
+    ("Anita S", "+91 9876543210", "anita@mail.com"),
+    ("John", "9000011111", ""),
+]
+merged = {}
+for name, number, email in contacts:
+    key = clean_number(number)
+    if key not in merged:
+        merged[key] = {"name": name, "numbers": set(), "emails": set()}
+    merged[key]["numbers"].add(key)
+    if email != "":
+        merged[key]["emails"].add(email)
+    if len(name) > len(merged[key]["name"]):
+        merged[key]["name"] = name
+for key in merged:
+    person = merged[key]
+    print(person["name"], person["numbers"], person["emails"])
